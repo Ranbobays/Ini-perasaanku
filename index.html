@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koiiro Lyrics with Custom Timing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ff9a9e; /* Warna pink */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .lyrics-container {
+            text-align: center;
+            color: #fff; /* Warna teks putih */
+            opacity: 0; /* Awalnya lirik disembunyikan */
+        }
+
+        .line {
+            font-size: 2em;
+            margin: 10px 0;
+            display: none; /* Awalnya baris lirik disembunyikan */
+        }
+    </style>
+</head>
+<body>
+    <div class="lyrics-container" id="lyricsContainer">
+        <div class="line">Suki yo</div>
+        <div class="line">Ima anata ni omoi nosete</div>
+        <div class="line">Hora, sunao ni naru no watashi</div>
+        <div class="line">Kono saki motto soba ni ite mo ii ka na?</div>
+        <div class="line">Koi to koi ga kasanatte</div>
+        <div class="line">Suki yo</div>
+        <div class="line">Ima anata ni omoi todoke</div>
+        <div class="line">Nee, kizuitekuremasen ka?</div>
+        <div class="line">Doushiyou mo nai kurai</div>
+        <div class="line">Kokoro made suki ni natteiku</div>
+    </div>
+
+    <audio id="myAudio" controls>
+        <source src="audio/0715.MP3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Mengambil semua baris lirik
+        const lines = document.querySelectorAll('.line');
+        let index = 0;
+        
+        // Fungsi untuk menampilkan baris lirik dan mengatur waktu tampilnya
+        function showLyrics() {
+            if (index < lines.length) {
+                // Menampilkan baris lirik saat ini
+                lines[index].style.display = 'block';
+                // Mengatur waktu sebelum baris lirik berikutnya ditampilkan
+                setTimeout(() => {
+                    lines[index].style.display = 'none';
+                    index++;
+                    // Memanggil fungsi rekursif untuk baris lirik berikutnya setelah durasi tertentu
+                    showLyrics();
+                }, getDelay(index)); // Mengambil durasi berdasarkan indeks baris lirik
+            }
+        }
+
+        // Fungsi untuk mendapatkan durasi berdasarkan indeks baris lirik
+        function getDelay(index) {
+            const timings = [1000, 4000, 5000, 5500, 4000, 1000, 4000, 5300, 5500, 5000]; // Durasi dalam milidetik untuk setiap baris lirik
+            return timings[index];
+        }
+
+        // Event listener untuk memulai animasi saat audio dimulai
+        document.getElementById('myAudio').addEventListener('play', function() {
+            document.getElementById('lyricsContainer').style.opacity = '1'; // Menampilkan kontainer lirik
+            showLyrics(); // Memulai animasi lirik
+        });
+    </script>
+</body>
+</html>
