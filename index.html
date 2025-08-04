@@ -1,83 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koiiro Lyrics with Custom Timing</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ff9a9e; /* Warna pink */
-            font-family: 'Arial', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surat Cinta 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        .lyrics-container {
-            text-align: center;
-            color: #fff; /* Warna teks putih */
-            opacity: 0; /* Awalnya lirik disembunyikan */
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      overflow: hidden;
+    }
 
-        .line {
-            font-size: 2em;
-            margin: 10px 0;
-            display: none; /* Awalnya baris lirik disembunyikan */
-        }
-    </style>
+    .surat {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 400px;
+      margin: 100px auto;
+      border: 2px dashed #f08080;
+      border-radius: 20px;
+      position: relative;
+      z-index: 2;
+      background-color: #fff;
+    }
+
+    h1 {
+      font-family: 'Handlee', cursive;
+      font-size: 1.7rem;
+      color: #d24f4f;
+      margin-bottom: 30px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      font-size: 15px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .yes-btn {
+      background: #28c76f;
+      color: white;
+    }
+
+    .no-btn {
+      background: #ea5455;
+      color: white;
+      position: relative;
+    }
+
+    #message {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      color: #444;
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    #petunjuk {
+      margin-top: 15px;
+      color: #999;
+      font-size: 0.95rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating hearts */
+    .love {
+      position: absolute;
+      font-size: 20px;
+      color: #ff4d4d;
+      animation: float 5s infinite ease-in-out;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { transform: translateY(-50vh) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 0.6; }
+    }
+  </style>
 </head>
 <body>
-    <div class="lyrics-container" id="lyricsContainer">
-        <div class="line">Suki yo</div>
-        <div class="line">Ima anata ni omoi nosete</div>
-        <div class="line">Hora, sunao ni naru no watashi</div>
-        <div class="line">Kono saki motto soba ni ite mo ii ka na?</div>
-        <div class="line">Koi to koi ga kasanatte</div>
-        <div class="line">Suki yo</div>
-        <div class="line">Ima anata ni omoi todoke</div>
-        <div class="line">Nee, kizuitekuremasen ka?</div>
-        <div class="line">Doushiyou mo nai kurai</div>
-        <div class="line">Kokoro made suki ni natteiku</div>
+
+  <div class="surat">
+    <h1>Boleh gak aku dekatin kak? 🥺</h1>
+    <div class="btn-container">
+      <button class="yes-btn" onclick="tampilkanPesan()">Yes</button>
+      <button class="no-btn" id="noBtn" onclick="hindar()">No</button>
     </div>
+    <div id="message">YEY Gak boleh bohong ya🥺❤️</div>
+    <div id="petunjuk">Tekan Yes ya kak, jangan ragu ❤️</div>
+  </div>
 
-    <audio id="myAudio" controls>
-        <source src="audio/0715.MP3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+  <!-- Floating hearts -->
+  <script>
+    let noCounter = 0;
 
-    <script>
-        // Mengambil semua baris lirik
-        const lines = document.querySelectorAll('.line');
-        let index = 0;
-        
-        // Fungsi untuk menampilkan baris lirik dan mengatur waktu tampilnya
-        function showLyrics() {
-            if (index < lines.length) {
-                // Menampilkan baris lirik saat ini
-                lines[index].style.display = 'block';
-                // Mengatur waktu sebelum baris lirik berikutnya ditampilkan
-                setTimeout(() => {
-                    lines[index].style.display = 'none';
-                    index++;
-                    // Memanggil fungsi rekursif untuk baris lirik berikutnya setelah durasi tertentu
-                    showLyrics();
-                }, getDelay(index)); // Mengambil durasi berdasarkan indeks baris lirik
-            }
-        }
+    function hindar() {
+      noCounter++;
+      const noBtn = document.getElementById("noBtn");
+      const x = Math.floor(Math.random() * 200) - 100;
+      const y = Math.floor(Math.random() * 200) - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-        // Fungsi untuk mendapatkan durasi berdasarkan indeks baris lirik
-        function getDelay(index) {
-            const timings = [1000, 4000, 5000, 5500, 4000, 1000, 4000, 5300, 5500, 5000]; // Durasi dalam milidetik untuk setiap baris lirik
-            return timings[index];
-        }
+      if (noCounter >= 3) {
+        noBtn.remove();
+        const warning = document.createElement("div");
+        warning.innerText = "Anda dilarang menolak hati anak kecil 😡";
+        warning.style.color = "#ff4444";
+        warning.style.marginTop = "20px";
+        warning.style.fontWeight = "bold";
+        document.querySelector(".surat").appendChild(warning);
+      }
+    }
 
-        // Event listener untuk memulai animasi saat audio dimulai
-        document.getElementById('myAudio').addEventListener('play', function() {
-            document.getElementById('lyricsContainer').style.opacity = '1'; // Menampilkan kontainer lirik
-            showLyrics(); // Memulai animasi lirik
-        });
-    </script>
+    function tampilkanPesan() {
+      document.getElementById("message").style.display = "block";
+    }
+
+    // Generate floating hearts
+    for (let i = 0; i < 30; i++) {
+      const love = document.createElement('div');
+      love.className = 'love';
+      love.innerText = '❤️';
+      love.style.left = Math.random() * 100 + 'vw';
+      love.style.top = Math.random() * 100 + 'vh';
+      love.style.fontSize = Math.random() * 10 + 15 + 'px';
+      love.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      document.body.appendChild(love);
+    }
+  </script>
+
 </body>
 </html>
